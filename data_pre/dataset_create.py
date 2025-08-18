@@ -4,16 +4,16 @@ import shutil
 from pathlib import Path
 
 
-def organize_dataset(root_dir, train_value = 0.8, val_value = 0.1):
-    '''
+def organize_dataset(root_dir, train_value=0.8, val_value=0.1):
+    """
     date:2025.7.5
     author:jasonwu
     input:
     root_dir:(str)
     train_value:(float)
     val_value:(float)
-    按照8：1：1划分数据集
-    '''
+    按照8：1：1划分数据集.
+    """
     # 创建目标文件夹结构
     base_path = Path(root_dir)
     for folder in [
@@ -28,11 +28,7 @@ def organize_dataset(root_dir, train_value = 0.8, val_value = 0.1):
 
     # 获取所有图片文件（不包含子目录）
     img_extensions = [".jpg", ".jpeg", ".png", ".bmp", ".gif"]
-    image_files = [
-        f
-        for f in os.listdir(root_dir)
-        if os.path.splitext(f)[1].lower() in img_extensions
-    ]
+    image_files = [f for f in os.listdir(root_dir) if os.path.splitext(f)[1].lower() in img_extensions]
 
     # 获取所有标签文件（不包含子目录）
     label_files = [f for f in os.listdir(root_dir) if f.lower().endswith(".txt")]
@@ -41,9 +37,7 @@ def organize_dataset(root_dir, train_value = 0.8, val_value = 0.1):
     paired_files = []
     for img in image_files:
         base_name = os.path.splitext(img)[0]
-        matching_labels = [
-            l for l in label_files if os.path.splitext(l)[0] == base_name
-        ]
+        matching_labels = [l for l in label_files if os.path.splitext(l)[0] == base_name]
         if matching_labels:
             paired_files.append((img, matching_labels[0]))
 
@@ -63,14 +57,10 @@ def organize_dataset(root_dir, train_value = 0.8, val_value = 0.1):
             dest = "test"
 
         # 移动图片
-        shutil.move(
-            str(base_path / img_file), str(base_path / "images" / dest / img_file)
-        )
+        shutil.move(str(base_path / img_file), str(base_path / "images" / dest / img_file))
 
         # 移动标签
-        shutil.move(
-            str(base_path / label_file), str(base_path / "labels" / dest / label_file)
-        )
+        shutil.move(str(base_path / label_file), str(base_path / "labels" / dest / label_file))
 
     print(
         f"""

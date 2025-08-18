@@ -1,9 +1,10 @@
 from ultralytics import YOLO
+
 # # import os
 # # os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
-model = YOLO('yolo11n.pt')
-result = model.predict(source = 0, device = 'cpu', workers = 0, imgsz = 640, show = True)
+model = YOLO("yolo11n.pt")
+result = model.predict(source=0, device="cpu", workers=0, imgsz=640, show=True)
 
 
 # import torch
