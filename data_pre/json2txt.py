@@ -1,15 +1,12 @@
-import os
 import json
+import os
 from collections import defaultdict
 
-def convert_labelme_to_yolo(
-    json_file_path, txt_file_path, img_width, img_height, class_mapping
-):
-    """
-    将LabelMe格式的JSON转换为YOLO格式的TXT
-    """
+
+def convert_labelme_to_yolo(json_file_path, txt_file_path, img_width, img_height, class_mapping):
+    """将LabelMe格式的JSON转换为YOLO格式的TXT."""
     try:
-        with open(json_file_path, "r", encoding="utf-8") as f:
+        with open(json_file_path, encoding="utf-8") as f:
             data = json.load(f)
 
         shapes = data.get("shapes", [])
@@ -39,9 +36,7 @@ def convert_labelme_to_yolo(
                 height = (y2 - y1) / img_height
 
                 # 写入TXT文件
-                f.write(
-                    f"{class_mapping[label]} {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}\n"
-                )
+                f.write(f"{class_mapping[label]} {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}\n")
 
         return True
     except Exception as e:
@@ -54,7 +49,7 @@ def process_folder(folder_path, class_mapping):
     处理整个文件夹:
     1. 转换JSON到TXT（YOLO格式）
     2. 统计标签数量
-    3. 保留所有图片（不再删除）
+    3. 保留所有图片（不再删除）.
     """
     label_stats = defaultdict(int)
 
@@ -70,7 +65,7 @@ def process_folder(folder_path, class_mapping):
 
         # 从JSON中获取图片尺寸（需要先读取JSON）
         try:
-            with open(json_path, "r", encoding="utf-8") as f:
+            with open(json_path, encoding="utf-8") as f:
                 data = json.load(f)
                 img_height = data.get("imageHeight", 0)
                 img_width = data.get("imageWidth", 0)
@@ -87,7 +82,7 @@ def process_folder(folder_path, class_mapping):
         if success:
             # 统计标签数量
             if os.path.exists(txt_path):
-                with open(txt_path, "r") as f:
+                with open(txt_path) as f:
                     lines = f.readlines()
                     for line in lines:
                         class_id = line.split()[0]
@@ -106,7 +101,6 @@ def process_folder(folder_path, class_mapping):
 
 
 if __name__ == "__main__":
-
     class_mapping = {
         "Nohelmet": "0",
         "normal": "1",

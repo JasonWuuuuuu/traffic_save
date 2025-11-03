@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 
@@ -9,7 +8,7 @@ def remap_labels_inplace(data_dir, class_mapping):
     直接在原目录下修改标签文件，进行类别映射
     参数:
         data_dir (str): 包含图片和标签的目录路径
-        class_mapping (dict): 类别映射字典 {原类别: 新类别}
+        class_mapping (dict): 类别映射字典 {原类别: 新类别}.
     """
     data_path = Path(data_dir)
     processed_count = 0
@@ -19,7 +18,7 @@ def remap_labels_inplace(data_dir, class_mapping):
     for label_file in data_path.glob("*.txt"):
         try:
             # 读取原标签内容
-            with open(label_file, "r", encoding="utf-8") as f:
+            with open(label_file, encoding="utf-8") as f:
                 lines = f.readlines()
 
             # 处理每一行
